@@ -1,0 +1,35 @@
+{
+  "name": "covr",
+  "version": "0.0.1",
+  "description": "soon",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node src/index.js",
+    "lint": "xo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dima Paloskin <dima@paloskin.me>",
+  "license": "MIT",
+  "dependencies": {
+    "anser": "^1.1.0",
+    "blessed": "^0.1.81",
+    "node-pty": "^0.4.1"
+  },
+  "devDependencies": {
+    "xo": "^0.17.1"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "object-curly-spacing": [
+        0
+      ],
+      "unicorn/no-process-exit": [
+        0
+      ],
+      "curly": [
+        0
+      ]
+    }
+  }
+}
