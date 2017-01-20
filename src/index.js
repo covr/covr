@@ -1,7 +1,6 @@
-const os = require('os');
 const Session = require('./session');
 
-const isWin = os.platform() === 'win32';
+const isWin = /^win/.test(process.platform);
 
 const session = new Session({
   shell: isWin ? 'cmd' : 'bash',
