@@ -34,6 +34,7 @@ class Session extends EventEmitter {
     });
 
     this.program.getCursor((err, data) => {
+      if (err) return;
       this.initCursorPosition = {
         x: data.x,
         y: data.y
@@ -92,7 +93,7 @@ class Session extends EventEmitter {
     this.canvas.on('hide', this.rebuf.bind(this));
 
     this.input.on('change', buffer => {
-      if (!buffer.length) {
+      if (buffer.length === 0) {
         this.canvas.hide();
         return;
       }
@@ -147,7 +148,6 @@ class Session extends EventEmitter {
 
       this.term.write(data);
     });
-
   }
 
   isShell() {
@@ -184,7 +184,7 @@ class Session extends EventEmitter {
   }
 
   cursorTo(x, y) {
-    return `\u001b[${y+1};${x+1}H`;
+    return `\u001b[${y + 1};${x + 1}H`;
   }
 
   log(data) {

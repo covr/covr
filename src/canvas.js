@@ -59,7 +59,6 @@ class Canvas extends EventEmitter {
     } else {
       this.canvas.top = this.cords.y;
     }
-
   }
 
   show() {
