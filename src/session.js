@@ -30,7 +30,8 @@ class Session extends EventEmitter {
 
     this.program = new Program({
       input: this.stdin,
-      output: this.stdout
+      output: this.stdout,
+      log: process.env.NODE_ENV === 'development' ? resolve(process.cwd(), 'covr.log') : false
     });
 
     this.program.getCursor((err, data) => {
@@ -48,7 +49,6 @@ class Session extends EventEmitter {
     this.screen = new Screen({
       program: this.program,
       smartCSR: true,
-      log: process.env.NODE_ENV === 'development' ? resolve(process.cwd(), 'covr.log') : false,
       fullUnicode: true,
       cursor: {
         artificial: false
