@@ -153,7 +153,9 @@ class Input extends EventEmitter {
   }
 
   shouldIngore(data) {
-    if (this.isAnsi('END_OF_TEXT', data)) return false;
+    if (this.isAnsi('END_OF_TEXT', data)) {
+      return true;
+    }
 
     return false;
   }
