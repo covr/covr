@@ -26,7 +26,7 @@ class Session extends EventEmitter {
     this.stdin = stdin;
     this.stdout = stdout;
     this.shell = shell;
-    this.initCursorPosition = undefined;
+    this.initialCursorPosition = undefined;
 
     this.program = new Program({
       input: this.stdin,
@@ -36,7 +36,7 @@ class Session extends EventEmitter {
 
     this.program.getCursor((err, data) => {
       if (err) return;
-      this.initCursorPosition = {
+      this.initialCursorPosition = {
         x: data.x,
         y: data.y
       };
@@ -80,8 +80,8 @@ class Session extends EventEmitter {
 
     this.term.on('exit', code => {
       this.screen.destroy();
-      if (typeof this.initCursorPosition === 'object') {
-        this.stdin.write(this.cursorTo(this.initCursorPosition.x, this.initCursorPosition.y));
+      if (typeof this.initialCursorPosition === 'object') {
+        this.stdin.write(this.cursorTo(this.initialCursorPosition.x, this.initialCursorPosition.y));
       }
       process.exit(code);
     });
