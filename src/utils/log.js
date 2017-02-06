@@ -26,6 +26,8 @@ module.exports = (logPath = defaultPath) => {
       parsed = JSON.stringify(data);
     }
 
+    parsed = JSON.stringify(parsed.toString());
+
     const str = `${new Date()}\n${name ? name + ': ' : ''}${parsed}\n\n`;
     stream.write(str);
   };

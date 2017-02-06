@@ -1,5 +1,7 @@
 const Session = require('./session');
 
+const style = require('./default-style');
+
 const session = new Session({
   shell: 'bash',
   shellArgs: [],
@@ -9,7 +11,5 @@ const session = new Session({
   cwd: process.cwd(),
   stdin: process.stdin,
   stdout: process.stdout,
-  style: {
-    offset: 1
-  }
+  style
 });

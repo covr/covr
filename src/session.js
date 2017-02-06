@@ -20,7 +20,7 @@ class Session extends EventEmitter {
     cwd,
     stdin,
     stdout,
-    style = {}
+    style
   }) {
     super();
 
@@ -52,7 +52,7 @@ class Session extends EventEmitter {
       fullUnicode: true,
       cursor: {
         artificial: false
-      }
+      },
     });
 
     this.term = fork(shell, shellArgs, {
@@ -66,7 +66,8 @@ class Session extends EventEmitter {
     this.canvas = new Canvas({
       session: this,
       offset: style.offset || 0,
-      height: 15
+      height: 15,
+      style
     });
 
     this.input = new Input({});
@@ -100,13 +101,14 @@ class Session extends EventEmitter {
       }
 
       this.canvas.setBuffer(buffer);
-      this.canvas.setContent('should contains autocomplete items but...');
+      /*this.canvas.setContent(``);*/
     });
 
     this.term.on('data', data => {
       if (this.isShell()) {
         this.deferredUpdateCursorPosition();
       }
+
 
       // rmcup handler
       // prevent rmcup
@@ -138,12 +140,55 @@ class Session extends EventEmitter {
         return;
       }
 
+      const dataStr = data.toString();
+      if (this.input.isAnsi('ESCAPE', dataStr)) {
+        if (this.canvas.list.isActive()) {
+          this.log('reset@');
+          this.ignoreEscape = true;
+          this.canvas.list.reset();
+          return;
+        }
+
+        if (this.canvas.isShow) {
+          this.canvas.hide();
+          return;
+        }
+      }
+
+      if (this.input.isAnsi('UP', dataStr)) {
+        if (this.canvas.list.isActive()) {
+          this.canvas.list.up();
+          return;
+        }
+
+        if (this.input.getHistoryStepsCount() >= 0) {
+          this.canvas.list.reset();
+          this.canvas.hide();
+        }
+      }
+
+      if (this.input.isAnsi('DOWN', dataStr)) {
+
+        if (this.input.getHistoryStepsCount() <= 1 && !this.canvas.isShow && this.input.getBuffer().length) {
+          this.canvas.show();
+        }
+
+        if (!this.input.getHistoryStepsCount() || this.canvas.list.isActive()) {
+          this.canvas.list.down();
+          return;
+        }
+      }
+
       if (this.isShell()) {
         this.input.write(data);
         this.deferredUpdateCursorPosition();
       }
 
       this.term.write(data);
+    });
+
+    this.input.on('reset', () => {
+      this.canvas.list.reset();
     });
   }
 

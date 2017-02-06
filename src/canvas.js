@@ -1,6 +1,7 @@
 const { EventEmitter } = require('events');
 const { Box } = require('blessed');
 
+const CovrList = require('./list');
 const log = require('./utils/log')();
 
 module.exports =
@@ -19,6 +20,10 @@ class Canvas extends EventEmitter {
     this.offset = offset + 1;
     this.isShow = false;
 
+    const border = {
+      show: false
+    };
+
     this.canvas = new Box({
       parent: this.session.screen,
       height: height,
@@ -27,32 +32,21 @@ class Canvas extends EventEmitter {
       left: left,
       content: '   covr',
       style: {
-        bg: '#555',
-        fg: '#00ff00'
-      },
-      border: {
-        type: 'line'
+        bg: style.debugPanelBg,
+        fg: style.debugPanelFg
       }
     });
 
-    this.container = new Box({
-      parent: this.canvas,
-      top: 1,
-      left: 0,
-      height: this.canvas.height - 3,
-      content: '',
-      style: {
-        bg: '#333'
-      },
-      padding: {
-        left: 3,
-        top: 1
-      }
-    });
+    this.list = new CovrList({
+      canvas: this.canvas,
+      session,
+      style
+    })
+
   }
 
   setCursor(position) {
-    this.log({ event: 'position', position, show: this.isShow });
+    // this.log({ event: 'position', position, show: this.isShow });
     this.cords.y = position.y;
     if (this.cords.y > this.height + 1) {
       this.canvas.top = this.cords.y - (this.height + this.offset);
@@ -82,7 +76,8 @@ class Canvas extends EventEmitter {
 
   // modify header
   setBuffer(buffer) {
-    this.canvas.content = `   COVR. Buffer: ${buffer}`;
+    this.canvas.content = ` COVR. Buffer: ${buffer}`;
+    this.session.screen.render();
   }
 
   log(data) {

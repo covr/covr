@@ -32,14 +32,14 @@ class Input extends EventEmitter {
     this.buffer = buffer;
     this.emit('change', this.buffer);
     this.emit('state', this.getState());
-    this.log(this.getState());
+    // this.log(this.getState());
   }
 
   setPosition(position = 0) {
     this.position = position;
     this.emit('position', this.position);
     this.emit('state', this.getState());
-    this.log(this.getState());
+    // this.log(this.getState());
   }
 
   reset() {
@@ -47,6 +47,7 @@ class Input extends EventEmitter {
     this.setPosition();
     this.enableTracking();
     this.historySteps = 0;
+    this.emit('reset');
   }
 
   moveLeft() {
@@ -89,7 +90,9 @@ class Input extends EventEmitter {
     }
 
     if (this.isAnsi('DOWN', data)) {
-      this.historySteps--;
+      if (this.historySteps !== 0) {
+        this.historySteps--;
+      }
       return;
     }
 
@@ -155,6 +158,10 @@ class Input extends EventEmitter {
     }
 
     return false;
+  }
+
+  getHistoryStepsCount() {
+    return this.historySteps;
   }
 
   log(data) {

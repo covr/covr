@@ -12,8 +12,12 @@
   "license": "MIT",
   "dependencies": {
     "anser": "^1.1.0",
+    "ansi-styles": "^3.0.0",
     "blessed": "^0.1.81",
-    "node-pty": "^0.4.1"
+    "colornames": "^1.1.1",
+    "hex-color-regex": "^1.0.3",
+    "node-pty": "^0.4.1",
+    "supports-color": "^3.2.3"
   },
   "devDependencies": {
     "xo": "^0.17.1"

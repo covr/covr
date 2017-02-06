@@ -1,0 +1,10 @@
+{
+  "offset": 1,
+  "debugPanelBg": "#333",
+  "debugPanelFg": "#00ff00",
+  "bg": "#333",
+  "fg": "#ffffff",
+  "descriptionFg": "#aaa",
+  "scrollBg": "red",
+  "activeItemBg": "#007700"
+}
