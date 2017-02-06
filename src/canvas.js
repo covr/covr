@@ -49,7 +49,6 @@ class Canvas extends EventEmitter {
         top: 1
       }
     });
-
   }
 
   setCursor(position) {

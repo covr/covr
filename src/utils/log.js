@@ -5,18 +5,16 @@ const defaultPath = resolve(process.cwd(), 'covr.log');
 let stream;
 
 module.exports = (logPath = defaultPath) => {
-
   if (!stream) {
     stream = fs.createWriteStream(logPath);
   }
 
-  process.on('exit', (code) => {
+  process.on('exit', code => {
     stream.write(`${new Date()}\nProcess: exit with ${code}\n`);
     stream.close();
   });
 
-  return function(name, data) {
-
+  return function (name, data) {
     if (!data) {
       [name, data] = [data, name];
     }
@@ -30,6 +28,5 @@ module.exports = (logPath = defaultPath) => {
 
     const str = `${new Date()}\n${name ? name + ': ' : ''}${parsed}\n\n`;
     stream.write(str);
-  }
-
+  };
 };

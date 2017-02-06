@@ -1,5 +1,5 @@
 const { EventEmitter } = require('events');
-const { resolve, basename } = require('path');
+const { basename } = require('path');
 const { fork } = require('node-pty');
 const { Screen, Program } = require('blessed');
 
