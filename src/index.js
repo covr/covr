@@ -1,9 +1,7 @@
 const Session = require('./session');
 
-const isWin = /^win/.test(process.platform);
-
 const session = new Session({
-  shell: isWin ? 'cmd' : 'bash',
+  shell: 'bash',
   shellArgs: [],
   cols: process.stdout.columns,
   rows: process.stdout.rows,
