@@ -2,19 +2,16 @@ const { EventEmitter } = require('events');
 const anser = require('anser');
 
 const constants = require('./constants');
+const log = require('./utils/log')();
 
 module.exports =
 class Input extends EventEmitter {
 
-  constructor({ initialBuffer, initialPosition, /* stdin, stdout, */ log }) {
+  constructor({ initialBuffer, initialPosition }) {
     super();
 
     this.buffer = initialBuffer || '';
     this.position = initialPosition || 0;
-    // this.stdin = stdin || process.stdin;
-    // this.stdout = stdout || process.stdout;
-    this.log = log;
-
     this.track = true;
     this.historySteps = 0;
   }
@@ -35,14 +32,14 @@ class Input extends EventEmitter {
     this.buffer = buffer;
     this.emit('change', this.buffer);
     this.emit('state', this.getState());
-    // this.log(this.getState());
+    this.log(this.getState());
   }
 
   setPosition(position = 0) {
     this.position = position;
     this.emit('position', this.position);
     this.emit('state', this.getState());
-    // this.log(this.getState());
+    this.log(this.getState());
   }
 
   reset() {
@@ -158,6 +155,10 @@ class Input extends EventEmitter {
     }
 
     return false;
+  }
+
+  log(data) {
+    log('Input', data);
   }
 
 };

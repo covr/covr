@@ -1,10 +1,12 @@
 const { EventEmitter } = require('events');
 const { Box } = require('blessed');
 
+const log = require('./utils/log')();
+
 module.exports =
 class Canvas extends EventEmitter {
 
-  constructor({ session, height = 20, top = 0, left = 0, offset = 0, log, style }) {
+  constructor({ session, height = 20, top = 0, left = 0, offset = 0, style }) {
     super();
     this.session = session;
 
@@ -48,7 +50,6 @@ class Canvas extends EventEmitter {
       }
     });
 
-    this.log = log;
   }
 
   setCursor(position) {
@@ -83,5 +84,9 @@ class Canvas extends EventEmitter {
   // modify header
   setBuffer(buffer) {
     this.canvas.content = `   COVR. Buffer: ${buffer}`;
+  }
+
+  log(data) {
+    log('Canvas', data);
   }
 };

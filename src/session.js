@@ -6,6 +6,7 @@ const { Screen, Program } = require('blessed');
 const constants = require('./constants');
 const Input = require('./input');
 const Canvas = require('./canvas');
+const log = require('./utils/log')();
 
 module.exports =
 class Session extends EventEmitter {
@@ -30,8 +31,7 @@ class Session extends EventEmitter {
 
     this.program = new Program({
       input: this.stdin,
-      output: this.stdout,
-      log: process.env.NODE_ENV === 'development' ? resolve(process.cwd(), 'covr.log') : false
+      output: this.stdout
     });
 
     this.program.getCursor((err, data) => {
@@ -64,15 +64,12 @@ class Session extends EventEmitter {
     });
 
     this.canvas = new Canvas({
-      log: this.log.bind(this),
       session: this,
       offset: style.offset || 0,
       height: 15
     });
 
-    this.input = new Input({
-      log: this.log.bind(this)
-    });
+    this.input = new Input({});
 
     this.program = this.screen.program;
     this.program.disableMouse();
@@ -188,6 +185,6 @@ class Session extends EventEmitter {
   }
 
   log(data) {
-    this.screen.log(JSON.stringify(data));
+    log('Session', data);
   }
 };
