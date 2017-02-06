@@ -52,7 +52,7 @@ class Session extends EventEmitter {
       fullUnicode: true,
       cursor: {
         artificial: false
-      },
+      }
     });
 
     this.term = fork(shell, shellArgs, {
@@ -101,14 +101,12 @@ class Session extends EventEmitter {
       }
 
       this.canvas.setBuffer(buffer);
-      /*this.canvas.setContent(``);*/
     });
 
     this.term.on('data', data => {
       if (this.isShell()) {
         this.deferredUpdateCursorPosition();
       }
-
 
       // rmcup handler
       // prevent rmcup
@@ -169,8 +167,7 @@ class Session extends EventEmitter {
       }
 
       if (this.input.isAnsi('DOWN', dataStr)) {
-
-        if (this.input.getHistoryStepsCount() <= 1 && !this.canvas.isShow && this.input.getBuffer().length) {
+        if (this.input.getHistoryStepsCount() <= 1 && !this.canvas.isShow && this.input.getBuffer().length > 0) {
           this.canvas.show();
         }
 

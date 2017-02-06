@@ -20,10 +20,6 @@ class Canvas extends EventEmitter {
     this.offset = offset + 1;
     this.isShow = false;
 
-    const border = {
-      show: false
-    };
-
     this.canvas = new Box({
       parent: this.session.screen,
       height: height,
@@ -41,12 +37,10 @@ class Canvas extends EventEmitter {
       canvas: this.canvas,
       session,
       style
-    })
-
+    });
   }
 
   setCursor(position) {
-    // this.log({ event: 'position', position, show: this.isShow });
     this.cords.y = position.y;
     if (this.cords.y > this.height + 1) {
       this.canvas.top = this.cords.y - (this.height + this.offset);

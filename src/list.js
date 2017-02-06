@@ -37,7 +37,6 @@ class CovrList extends EventEmitter {
       }
     });
 
-
     const items = [
       { header: 'npm install', description: 'install npm dependencies' },
       { header: 'npm uninstall', description: 'remove npm dependencies' },
@@ -46,7 +45,7 @@ class CovrList extends EventEmitter {
       { header: '5 head', description: '5 description' },
       { header: '6 head', description: '6 description' },
       { header: '7 head', description: '7 description' },
-      { header: '8 head', description: '8 description' },
+      { header: '8 head', description: '8 description' }
     ];
 
     this.itemHeight = 2;
@@ -81,7 +80,7 @@ class CovrList extends EventEmitter {
   scroll() {
     const activeItem = (this.activeItem < 0) ? 0 : this.activeItem;
     let scrollTo = activeItem * this.itemHeight;
-    if (scrollTo < 0 || scrollTo > (this.listItems.length * this.itemHeight - this.itemHeight)) return;
+    if (scrollTo < 0 || scrollTo > ((this.listItems.length * this.itemHeight) - this.itemHeight)) return;
     if (scrollTo > this.list.height - this.itemHeight) {
       scrollTo += (this.itemHeight - 1);
     }
