@@ -140,6 +140,7 @@ class Session extends EventEmitter {
         return;
       }
 
+      // list control flow
       const dataStr = data.toString();
       if (this.input.isAnsi('ESCAPE', dataStr)) {
         if (this.canvas.list.isActive()) {
