@@ -49,22 +49,11 @@ class CovrList extends EventEmitter {
       { header: '8 head', description: '8 description' },
     ];
 
-    this.itemHeight = 3;
+    this.itemHeight = 2;
     this.items = [];
     this.activeItem = -1;
 
     this.setItems(items);
-
-    /* canvas.key('up', () => {
-      this.log('up');
-      this.emit('up');
-    });
-
-    canvas.key('down', () => {
-      this.log('down');
-      this.emit('down');
-    }); */
-
   }
 
   up() {
