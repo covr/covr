@@ -92,7 +92,15 @@ class CovrList extends EventEmitter {
     this.items = this.listItems.map((listItem, i) => {
       const header = `${ansyStyle.bold.open}${colors.colorString(this.style.fg, listItem.header)}${ansyStyle.bold.close}`;
       const description = colors.colorString(this.style.descriptionFg, listItem.description);
-      const contentString = ` ${header}\n  ${description}`;
+      let contentString = `  ${header}\n   ${description}\n`;
+
+      if (i === this.activeItem) {
+        contentString = contentString.split('\n').map(line => {
+
+          return  `${ansyStyle.bold.open}${ansyStyle.color.red.open}│${ansyStyle.bold.close}${ansyStyle.color.close}${line.substring(1)}`;
+        }).join('\n');
+        this.log(contentString);
+      }
 
       const box = new Box({
         width: this.list.width - 1,
