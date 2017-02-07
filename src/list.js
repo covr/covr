@@ -96,7 +96,6 @@ class CovrList extends EventEmitter {
 
       if (i === this.activeItem) {
         contentString = contentString.split('\n').map(line => {
-
           return  `${ansyStyle.color.red.open}${colorString(this.style.activeItemLeftBorderColor, '│')}${ansyStyle.color.close}${line.substring(1)}`;
         }).join('\n');
         this.log(contentString);

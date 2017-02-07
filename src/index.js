@@ -13,3 +13,5 @@ const session = new Session({
   stdout: process.stdout,
   style
 });
+
+session.log('Start session');
