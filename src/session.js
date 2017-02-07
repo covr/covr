@@ -198,10 +198,6 @@ class Session extends EventEmitter {
     return constants.regexps.DSR.test(data.toString());
   }
 
-  normalizeData(data) {
-    return data;
-  }
-
   rebuf() {
     // strip bell
     this.buf = this.buf.replace(constants.regexps.BELL, '');
