@@ -1,3 +1,9 @@
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dimapaloskin/media/master/covr.png" alt="covr" />
+</p>
+
+
 # COVR
 
 > Proof of concept terminal autocomplete like in your favorite code editor
