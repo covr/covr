@@ -162,7 +162,7 @@ class CovrList extends EventEmitter {
 
       this.list.append(box);
 
-      currentTopPosition += isItem ? this.itemHeight : this.headerHeight;
+      currentTopPosition += box.height;
       if (isItem) {
         itemsIterator++;
       }
