@@ -69,7 +69,7 @@ class CovrList extends EventEmitter {
     if (this.activeItem < 0) return;
     this.log('Active item:' + this.activeItem.toString());
     this.activeItem--;
-    this.renderEntries();
+    this.fillEntries();
     this.scroll();
     this.session.screen.render();
   }
@@ -77,14 +77,14 @@ class CovrList extends EventEmitter {
   down() {
     if (this.activeItem === this.itemsCount - 1) return;
     this.activeItem++;
-    this.renderEntries();
+    this.fillEntries();
     this.scroll();
     this.session.screen.render();
   }
 
   setEntries(entries) {
     this.listEntries = entries;
-    this.renderEntries();
+    this.fillEntries();
   }
 
   scroll() {
@@ -124,7 +124,7 @@ class CovrList extends EventEmitter {
     return scrollPosition;
   }
 
-  renderEntries() {
+  fillEntries() {
     this.entries.forEach(entry => entry.destroy);
 
     let itemsIterator = 0;
@@ -194,7 +194,7 @@ class CovrList extends EventEmitter {
   reset() {
     this.log('reset');
     this.activeItem = -1;
-    this.renderEntries();
+    this.fillEntries();
     this.scroll();
     this.session.screen.render();
   }
