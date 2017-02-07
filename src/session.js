@@ -141,7 +141,7 @@ class Session extends EventEmitter {
       // list control flow
       const dataStr = data.toString();
       if (this.input.isAnsi('ESCAPE', dataStr)) {
-        if (this.canvas.list.isActive()) {
+        if (this.canvas.list.isActivated()) {
           this.log('reset@');
           this.ignoreEscape = true;
           this.canvas.list.reset();
@@ -155,7 +155,7 @@ class Session extends EventEmitter {
       }
 
       if (this.input.isAnsi('UP', dataStr)) {
-        if (this.canvas.list.isActive()) {
+        if (this.canvas.list.isActivated()) {
           this.canvas.list.up();
           return;
         }
@@ -171,7 +171,7 @@ class Session extends EventEmitter {
           this.canvas.show();
         }
 
-        if (!this.input.getHistoryStepsCount() || this.canvas.list.isActive()) {
+        if (!this.input.getHistoryStepsCount() || this.canvas.list.isActivated()) {
           this.canvas.list.down();
           return;
         }

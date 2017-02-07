@@ -7,5 +7,7 @@
   "descriptionFg": "#aaa",
   "scrollBg": "red",
   "activeItemBg": "#770000",
-  "activeItemLeftBorderColor": "#ffffff"
+  "activeItemLeftBorderColor": "#ffffff",
+  "headerBg": "#000",
+  "headerFg": "#fff"
 }
