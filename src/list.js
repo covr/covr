@@ -62,8 +62,6 @@ class CovrList extends EventEmitter {
     this.entries = [];
     this.activeItem = -1;
     this.itemsCount = 0;
-    this.fullListeight = 0;
-    this.scrollPosition = 0;
 
     this.setEntries(entries);
   }
@@ -91,11 +89,9 @@ class CovrList extends EventEmitter {
   }
 
   scroll() {
-    const activeItem = (this.activeItem < 0) ? 0 : this.activeItem;
     const scrollTo = this.calculateScrollPosition();
     this.log('Scroll to: ' + scrollTo.toString());
     if (scrollTo !== false) {
-      this.scrollPosition = scrollTo;
       this.list.scrollTo(scrollTo);
     }
 
@@ -106,27 +102,26 @@ class CovrList extends EventEmitter {
 
     let itemsIterator = 0;
     let scrollPosition = 0;
+    let item;
 
     this.entries.every(entry => {
-      if (itemsIterator === this.activeItem) {
+      const isItem = entry.entryType === 'item';
+      scrollPosition += entry.height;
+
+      if (isItem && itemsIterator === this.activeItem) {
+        item = entry;
         return false;
       }
 
-      scrollPosition += entry.height;
-      if (entry.entryType === 'item') {
+      if (isItem) {
         itemsIterator++;
       }
       return true;
     });
 
-    if (scrollPosition > this.scrollPosition) {
-      if (scrollPosition > (this.list.height / 2)) {
-        scrollPosition += (this.list.height / 2);
-      }
-    } else {
-      scrollPosition -= (this.list.height / 2);
+    if (scrollPosition <= this.list.getScroll() && item.top < scrollPosition) {
+      scrollPosition = item.top;
     }
-
     return scrollPosition;
   }
 
@@ -176,7 +171,6 @@ class CovrList extends EventEmitter {
     });
 
     this.itemsCount = itemsIterator;
-    this.fullListeight = currentTopPosition;
   }
 
   getItemContent(entry, active) {
