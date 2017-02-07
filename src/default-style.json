@@ -6,5 +6,6 @@
   "fg": "#ffffff",
   "descriptionFg": "#aaa",
   "scrollBg": "red",
-  "activeItemBg": "#333"
+  "activeItemBg": "#770000",
+  "activeItemLeftBorderColor": "#ffffff"
 }

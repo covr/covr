@@ -2,7 +2,7 @@ const { EventEmitter } = require('events');
 const { Box } = require('blessed');
 const ansyStyle = require('ansi-styles');
 
-const colors = require('./utils/colors');
+const { colorString } = require('./utils/colors');
 const log = require('./utils/log')();
 
 module.exports =
@@ -38,14 +38,14 @@ class CovrList extends EventEmitter {
     });
 
     const items = [
-      { header: 'npm install', description: 'install npm dependencies' },
-      { header: 'npm uninstall', description: 'remove npm dependencies' },
-      { header: '3 head', description: '3 description' },
-      { header: '4 head', description: '4 description' },
-      { header: '5 head', description: '5 description' },
-      { header: '6 head', description: '6 description' },
-      { header: '7 head', description: '7 description' },
-      { header: '8 head', description: '8 description' }
+      { title: 'npm install', description: 'install npm dependencies' },
+      { title: 'npm uninstall', description: 'remove npm dependencies' },
+      { title: '3 title', description: '3 description' },
+      { title: '4 title', description: '4 description' },
+      { title: '5 title', description: '5 description' },
+      { title: '6 title', description: '6 description' },
+      { title: '7 title', description: '7 description' },
+      { title: '8 title', description: '8 description' }
     ];
 
     this.itemHeight = 2;
@@ -90,14 +90,14 @@ class CovrList extends EventEmitter {
   fillItems() {
     this.items.forEach(item => item.destroy);
     this.items = this.listItems.map((listItem, i) => {
-      const header = `${ansyStyle.bold.open}${colors.colorString(this.style.fg, listItem.header)}${ansyStyle.bold.close}`;
-      const description = colors.colorString(this.style.descriptionFg, listItem.description);
-      let contentString = `  ${header}\n   ${description}\n`;
+      const title = `${ansyStyle.bold.open}${colorString(this.style.fg, listItem.title)}${ansyStyle.bold.close}`;
+      const description = colorString(this.style.descriptionFg, listItem.description);
+      let contentString = `  ${title}\n   ${description}`;
 
       if (i === this.activeItem) {
         contentString = contentString.split('\n').map(line => {
 
-          return  `${ansyStyle.bold.open}${ansyStyle.color.red.open}│${ansyStyle.bold.close}${ansyStyle.color.close}${line.substring(1)}`;
+          return  `${ansyStyle.color.red.open}${colorString(this.style.activeItemLeftBorderColor, '│')}${ansyStyle.color.close}${line.substring(1)}`;
         }).join('\n');
         this.log(contentString);
       }
