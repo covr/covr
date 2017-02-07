@@ -47,6 +47,13 @@ class CovrList extends EventEmitter {
       { title: '5 title', description: '5 description', type: 'item'  },
       { title: '6 title', description: '6 description', type: 'item'  },
       { title: '7 title', description: '7 description', type: 'item'  },
+      { title: '8 title', description: '8 description', type: 'item'  },
+      { title: 'plugin name', type: 'header' },
+      { title: '3 title', description: '3 description', type: 'item'  },
+      { title: '4 title', description: '4 description', type: 'item'  },
+      { title: '5 title', description: '5 description', type: 'item'  },
+      { title: '6 title', description: '6 description', type: 'item'  },
+      { title: '7 title', description: '7 description', type: 'item'  },
       { title: '8 title', description: '8 description', type: 'item'  }
     ];
 
@@ -56,6 +63,7 @@ class CovrList extends EventEmitter {
     this.activeItem = -1;
     this.itemsCount = 0;
     this.fullListeight = 0;
+    this.scrollPosition = 0;
 
     this.setEntries(entries);
   }
@@ -84,46 +92,41 @@ class CovrList extends EventEmitter {
 
   scroll() {
     const activeItem = (this.activeItem < 0) ? 0 : this.activeItem;
-    /* let scrollTo = activeItem * this.itemHeight;
-    if (scrollTo < 0 || scrollTo > ((this.listEntries.length * this.itemHeight) - this.itemHeight)) return;
-    if (scrollTo > this.list.height - this.itemHeight) {
-      scrollTo += (this.itemHeight - 1);
-    }*/
-
     const scrollTo = this.calculateScrollPosition();
     this.log('Scroll to: ' + scrollTo.toString());
     if (scrollTo !== false) {
+      this.scrollPosition = scrollTo;
       this.list.scrollTo(scrollTo);
     }
 
   }
 
   calculateScrollPosition() {
-    const activeItem = (this.activeItem < 0) ? 0 : this.activeItem;
+    if (this.activeItem <= 0) return 0;
 
-    if (activeItem === 0) return 0;
-
-    let entriesIterator = 0;
+    let itemsIterator = 0;
     let scrollPosition = 0;
 
     this.entries.every(entry => {
-
-      if (entriesIterator === this.activeItem) {
-        if (scrollPosition > this.list.height - entry.height) {
-          scrollPosition += (entry.height - 1);
-        }
+      if (itemsIterator === this.activeItem) {
         return false;
       }
 
       scrollPosition += entry.height;
       if (entry.entryType === 'item') {
-        entriesIterator++;
+        itemsIterator++;
       }
-
       return true;
     });
 
-    if (scrollPosition < 0 || scrollPosition > this.fullListeight) return false;
+    if (scrollPosition > this.scrollPosition) {
+      if (scrollPosition > (this.list.height / 2)) {
+        scrollPosition += (this.list.height / 2);
+      }
+    } else {
+      scrollPosition -= (this.list.height / 2);
+    }
+
     return scrollPosition;
   }
 
