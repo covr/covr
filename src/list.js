@@ -21,7 +21,6 @@ class CovrList extends EventEmitter {
       left: 0,
       height: canvas.height - 1,
       width: '100%',
-      // content: ,
       style: {
         bg: style.bg
       },
