@@ -180,7 +180,7 @@ class CovrList extends EventEmitter {
     if (active) {
       // add left border if item is active
       contentString = contentString.split('\n').map(line => {
-        return  `${ansyStyle.color.red.open}${colorString(this.style.activeItemLeftBorderColor, '│')}${ansyStyle.color.close}${line.substring(1)}`;
+        return `${colorString(this.style.activeItemLeftBorderColor, this.style.activeItemLeftBorderColor, ' ')}${line.substring(1)}`
       }).join('\n');
     }
 

@@ -19,8 +19,17 @@ function convertToHex(color) {
   return color.toLowerCase();
 }
 
-function colorString(color, string) {
+function colorString(color, bgColor, string) {
+
+
+  if (!string) {
+    [bgColor, string] = [string, bgColor];
+  }
+
   color = convertToHex(color);
+  if (bgColor) {
+    bgColor = convertToHex(bgColor);
+  }
 
   let colorFnName = 'ansi';
 
@@ -33,8 +42,15 @@ function colorString(color, string) {
   }
 
   const colorFn = style.color[colorFnName].hex;
+  const colorBgFn = style.bgColor[colorFnName].hex;
 
-  return `${colorFn(color)}${string}${style.color.close}`;
+  let result = `${colorFn(color)}${string}${style.color.close}`;
+
+  if (bgColor) {
+    result = `${colorBgFn(bgColor)}${result}${style.bgColor.close}`;
+  }
+
+  return result;
 }
 
 module.exports.convertToHex = convertToHex;
