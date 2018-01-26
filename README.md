@@ -14,3 +14,7 @@ $ git clone https://github.com/dimapaloskin/covr
 $ yarn install
 $ npm run dev
 ```
+
+## Cast
+
+[![asciicast](https://asciinema.org/a/102288.png)](https://asciinema.org/a/102288)
